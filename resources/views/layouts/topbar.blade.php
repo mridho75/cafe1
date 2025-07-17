@@ -12,17 +12,16 @@
     }
 </style>
 
-<nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+<nav class="navbar-cafe navbar navbar-top navbar-expand-md" id="navbar-main" style="border-radius:0.5rem; margin-bottom:1rem;">
     <div class="container-fluid">
 
         <!-- Tombol Toggle Sidebar -->
-        <button id="btn-toggle-sidebar" class="btn btn-sm btn-outline-light mr-3"
-            style="min-width: 38px; height: 38px; padding: 0; border-radius: 6px; font-size: 1.25rem;">
-            &#x2715; <!-- icon silang -->
+        <button id="btn-toggle-sidebar" class="btn-cafe mr-3" style="min-width: 38px; height: 38px; font-size: 1.25rem;">
+            &#9776; <!-- icon menu -->
         </button>
 
         <!-- Brand -->
-        <a class="h4 mb-0 text-white d-none d-lg-inline-block" href="{{ route('kasir.home') }}">@yield('judul', 'Last Coffee')</a>
+        <a class="h4 mb-0 text-cafe-beige d-none d-lg-inline-block" href="{{ route('kasir.home') }}">@yield('judul', 'Minano Cafe')</a>
 
         <!-- User -->
         <ul class="navbar-nav align-items-center d-none d-md-flex">

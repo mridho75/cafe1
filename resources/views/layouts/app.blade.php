@@ -11,9 +11,12 @@
     <link href="{{ asset('assets/js/plugins/nucleo/css/nucleo.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/argon-dashboard.css?v=1.1.2') }}" rel="stylesheet" />
+
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Custom Cafe Color Palette & UI -->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
 </head>
 
@@ -44,14 +47,14 @@
 
 
         {{-- @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show my-2 mx-2" role="alert">
+            <div class="alert card-cafe" style="background:var(--cafe-chamoisee);color:var(--cafe-beige);border-left:6px solid var(--cafe-bistre);margin:1rem 0;">
                 {{ session('error') }}
 
             </div>
         @endif
 
         @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show my-2 mx-2" role="alert">
+            <div class="alert card-cafe" style="background:var(--cafe-khaki);color:var(--cafe-bistre);border-left:6px solid var(--cafe-coffee);margin:1rem 0;">
                 {{ session('success') }}
 
             </div>

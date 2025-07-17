@@ -1,9 +1,9 @@
-<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
+<nav class="sidebar-cafe navbar-vertical fixed-left navbar-expand-md" id="sidenav-main" style="min-height:100vh;">
     <div class="container-fluid position-relative">
 
         {{-- Brand --}}
-        <a class="pt-0" href="{{ route('dashboard') }}">
-            <h1 class="mt-2 logo-text">Last Coffee</h1>
+        <a class="pt-0 text-cafe-beige" href="{{ route('dashboard') }}">
+            <h1 class="mt-2 logo-text" style="font-weight:700;letter-spacing:2px;">☕ Minano Cafe</h1>
         </a>
 
 
@@ -12,11 +12,11 @@
         <div class="collapse navbar-collapse" id="sidenav-collapse-main">
 
             {{-- Navigation --}}
-            <ul class="navbar-nav">
+            <ul class="navbar-nav" style="margin-top:2rem;">
                 {{-- Semua role bisa akses Dashboard --}}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('dashboard') }}">
-                        <i class="ni ni-tv-2 text-blue"></i> Dashboard
+                    <a class="nav-link text-cafe-beige" href="{{ route('dashboard') }}" style="font-weight:600;">
+                        <i class="ni ni-tv-2" style="color:#F5F5DC;"></i> Dashboard
                     </a>
                 </li>
 

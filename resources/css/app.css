@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Cafe Color Palette */
+:root {
+  --cafe-beige: #F5F5DC;
+  --cafe-khaki: #CBB799;
+  --cafe-chamoisee: #A07856;
+  --cafe-coffee: #6F4D38;
+  --cafe-bistre: #3D211A;
+}
+
+.bg-cafe-beige { background-color: var(--cafe-beige) !important; }
+.bg-cafe-khaki { background-color: var(--cafe-khaki) !important; }
+.bg-cafe-chamoisee { background-color: var(--cafe-chamoisee) !important; }
+.bg-cafe-coffee { background-color: var(--cafe-coffee) !important; }
+.bg-cafe-bistre { background-color: var(--cafe-bistre) !important; }
+
+.text-cafe-beige { color: var(--cafe-beige) !important; }
+.text-cafe-khaki { color: var(--cafe-khaki) !important; }
+.text-cafe-chamoisee { color: var(--cafe-chamoisee) !important; }
+.text-cafe-coffee { color: var(--cafe-coffee) !important; }
+.text-cafe-bistre { color: var(--cafe-bistre) !important; }
+
+.btn-cafe {
+  background: var(--cafe-chamoisee);
+  color: var(--cafe-beige);
+  border-radius: 0.5rem;
+  padding: 0.5rem 1.5rem;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.btn-cafe:hover {
+  background: var(--cafe-coffee);
+  color: var(--cafe-beige);
+}
+
+.card-cafe {
+  background: var(--cafe-beige);
+  border: 1px solid var(--cafe-khaki);
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(61,33,26,0.08);
+  padding: 1.5rem;
+}
+
+input, select, textarea {
+  border-radius: 0.5rem !important;
+  border: 1px solid var(--cafe-khaki) !important;
+  background: var(--cafe-beige) !important;
+  color: var(--cafe-bistre) !important;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid var(--cafe-chamoisee) !important;
+  border-color: var(--cafe-chamoisee) !important;
+}
+
+.navbar-cafe {
+  background: var(--cafe-coffee);
+  color: var(--cafe-beige);
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+}
+
+.sidebar-cafe {
+  background: var(--cafe-bistre);
+  color: var(--cafe-beige);
+}
+
+.footer-cafe {
+  background: var(--cafe-khaki);
+  color: var(--cafe-bistre);
+  padding: 1rem 2rem;
+  text-align: center;
+  font-size: 1rem;
+}

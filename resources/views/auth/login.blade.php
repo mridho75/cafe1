@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Login - Cafe POS</title>
+    <title>Login - Minano Cafe</title>
     <!-- Favicon -->
     <link href="{{ asset('assets/img/brand/favicon.png') }}" rel="icon" type="image/png">
     <!-- Fonts -->
@@ -13,20 +13,20 @@
     <link href="{{ asset('assets/js/plugins/nucleo/css/nucleo.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet" />
     <!-- CSS Files -->
-    <link href="{{ asset('assets/css/argon-dashboard.css?v=1.1.2') }}" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 
-<body class="bg-default">
+<body class="bg-cafe-beige" style="min-height:100vh; background:linear-gradient(135deg, #F5F5DC 0%, #CBB799 50%, #6F4D38 100%);">
     <div class="main-content">
         <!-- Header -->
-        <div class="header bg-gradient-primary py-7 py-lg-6">
+        <div class="header" style="background:var(--cafe-coffee);padding:3rem 0 2rem 0;">
             <div class="container">
                 <div class="header-body text-center mb-7">
                     <div class="row justify-content-center">
                         <div class="col-lg-5 col-md-6 mt-4">
-                            <h1 class="text-white">Selamat Datang!</h1>
-                            <p class="text-lead text-light">Silakan login untuk melanjutkan ke sistem kasir.</p>
+                            <h1 class="text-cafe-beige" style="font-weight:700;letter-spacing:2px;">☕ Selamat Datang!</h1>
+                            <p class="text-cafe-khaki" style="font-size:1.1rem;">Silakan login untuk melanjutkan ke sistem kasir.</p>
                         </div>
                     </div>
                 </div>
@@ -39,78 +39,81 @@
         </div>
 
         <!-- Page content -->
-        <div class="container mt--8 pb-5">
-            <div class="row justify-content-center">
-                <div class="col-lg-5 col-md-7">
-                    <div class="card bg-secondary shadow border-0">
-
-                        <div class="card bg-white border-0 shadow-lg rounded-3 px-5 py-4">
-                            <div class="text-center mb-4">
-                                <div class="mb-2 pt-2">
-                                    <i class="fas fa-coffee fa-2x text-default"></i>
-                                </div>
-                                <h4 class="text-dark fw-bold">Login ke Cafe POS</h4>
-                                <p class="text-muted small">Akses sistem kasir dengan akun Anda</p>
-                            </div>
-
-                            @if (session('success'))
-                                <div class="alert alert-success alert-dismissible fade show small" role="alert">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
-
-                            @if ($errors->has('login'))
-                                <div class="alert alert-danger alert-dismissible fade show small" role="alert">
-                                    {{ $errors->first('login') }}
-                                </div>
-                            @endif
-
-                            <form method="POST" action="{{ route('login.process') }}" class="needs-validation"
-                                novalidate>
-                                @csrf
-
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="floatingUsername" name="username"
-                                        placeholder="Username" value="{{ old('username') }}" required>
-                                    <label for="floatingUsername"><i class="fas fa-user me-2"></i>Username</label>
-                                    @error('username')
-                                        <div class="text-danger small mt-1">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="form-floating mb-3 position-relative">
-                                    <input type="password" class="form-control" id="floatingPassword" name="password"
-                                        placeholder="Password" required>
-                                    <label for="floatingPassword"><i class="fas fa-lock me-2"></i>Password</label>
-
-                                    <button type="button"
-                                        class="btn btn-sm btn-link text-muted position-absolute top-50 end-0 translate-middle-y me-3"
-                                        onclick="togglePassword()" style="z-index: 2;">
-                                        <i class="fas fa-eye" id="toggleIcon"></i>
-                                    </button>
-
-                                    @error('password')
-                                        <div class="text-danger small mt-1">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-
-                                <div class="d-grid">
-                                    <button type="submit" class="btn btn-success py-2 fw-semibold">
-                                        <i class="fas fa-sign-in-alt me-2"></i>Login
-                                    </button>
-                                </div>
-                            </form>
-
-                            <div class="mt-4 text-center">
-                                <small class="text-muted">© {{ date('Y') }} Cafe POS • All rights reserved</small>
-                            </div>
-                        </div>
-
+        <div class="container d-flex align-items-center justify-content-center" style="min-height:70vh;">
+            <div class="card-cafe shadow-lg p-4" style="max-width:410px;width:100%;border-radius:1.5rem;box-shadow:0 8px 32px 0 rgba(61,33,26,0.18);animation:fadeInUp 0.7s cubic-bezier(.4,2,.6,1);backdrop-filter:blur(2px);">
+                <div class="text-center mb-4">
+                    <div class="mb-2 pt-2">
+                        <i class="fas fa-coffee fa-2x" style="color:var(--cafe-coffee);filter:drop-shadow(0 2px 6px #CBB79988);"></i>
                     </div>
+                    <h4 class="mb-1" style="color:var(--cafe-coffee);font-weight:800;letter-spacing:1px;">Login ke Minano Cafe</h4>
+                    <p class="text-cafe-chamoisee small" style="font-size:1.05rem;">Akses sistem kasir dengan akun Anda</p>
+                </div>
+                @if (session('success'))
+                    <div class="alert card-cafe" style="background:var(--cafe-khaki);color:var(--cafe-bistre);border-left:6px solid var(--cafe-coffee);margin-bottom:1rem;">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                @if ($errors->has('login'))
+                    <div class="alert card-cafe" style="background:var(--cafe-chamoisee);color:var(--cafe-beige);border-left:6px solid var(--cafe-bistre);margin-bottom:1rem;">
+                        {{ $errors->first('login') }}
+                    </div>
+                @endif
+                <form method="POST" action="{{ route('login.process') }}" class="needs-validation" novalidate autocomplete="off">
+                    @csrf
+                    <div class="form-group mb-3 position-relative">
+                        <label for="floatingUsername" style="color:var(--cafe-bistre);font-weight:600;">Username</label>
+                        <div style="position:relative;">
+                            <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--cafe-chamoisee);font-size:1.1rem;"><i class="fas fa-user"></i></span>
+                            <input type="text" class="form-control" id="floatingUsername" name="username" placeholder="Username" value="{{ old('username') }}" required autofocus style="padding-left:2.2rem;transition:box-shadow .2s;box-shadow:0 1px 4px #CBB79922;">
+                        </div>
+                        @error('username')
+                            <div class="text-danger small mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group mb-3 position-relative">
+                        <label for="floatingPassword" style="color:var(--cafe-bistre);font-weight:600;">Password</label>
+                        <div style="position:relative;">
+                            <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--cafe-chamoisee);font-size:1.1rem;"><i class="fas fa-lock"></i></span>
+                            <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password" required style="padding-left:2.2rem;transition:box-shadow .2s;box-shadow:0 1px 4px #CBB79922;">
+                            <button type="button" class="btn btn-sm btn-link text-cafe-coffee position-absolute top-50 end-0 translate-middle-y me-3" onclick="togglePassword()" style="z-index:2;">
+                                <i class="fas fa-eye" id="toggleIcon"></i>
+                            </button>
+                        </div>
+                        @error('password')
+                            <div class="text-danger small mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn-cafe" style="font-size:1.15rem;border-radius:2rem;box-shadow:0 2px 8px #A0785633;transition:background .2s,box-shadow .2s;">Login</button>
+                    </div>
+                </form>
+                <div class="mt-4 text-center">
+                    <small class="text-cafe-chamoisee">© {{ date('Y') }} Minano Cafe • All rights reserved</small>
                 </div>
             </div>
         </div>
+        <style>
+        @keyframes fadeInUp {
+            from { opacity:0; transform:translateY(40px); }
+            to { opacity:1; transform:translateY(0); }
+        }
+        .btn-cafe:hover, .btn-cafe:focus {
+            background: var(--cafe-coffee) !important;
+            color: var(--cafe-beige) !important;
+            box-shadow: 0 4px 16px #6F4D3844;
+        }
+        .card-cafe {
+            transition: box-shadow .2s, transform .2s;
+        }
+        .card-cafe:hover {
+            box-shadow: 0 12px 32px 0 rgba(61,33,26,0.22);
+            transform: translateY(-2px) scale(1.01);
+        }
+        input.form-control:focus {
+            box-shadow: 0 0 0 2px var(--cafe-chamoisee) !important;
+            border-color: var(--cafe-chamoisee) !important;
+        }
+        </style>
 
         <!-- Footer -->
         <footer class="py-5">

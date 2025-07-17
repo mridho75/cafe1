@@ -6,45 +6,37 @@
 @section('content')
     <div class="container mt-5">
 
-        <div class="card shadow">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">Daftar User</h4>
-                <a href="{{ route('user.create') }}" class="btn btn-success">
-                    Tambah User
-                </a>
+        <div class="card-cafe">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0" style="color:var(--cafe-coffee);font-weight:700;">Daftar User</h4>
+                <a href="{{ route('user.create') }}" class="btn-cafe">Tambah User</a>
             </div>
-
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table align-items-center table-flush">
-                        <thead class="thead-light">
+            <div class="table-responsive">
+                <table class="table align-items-center" style="background:var(--cafe-beige);">
+                    <thead style="background:var(--cafe-khaki);color:var(--cafe-bistre);">
+                        <tr>
+                            <th scope="col">Username</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($users as $user)
                             <tr>
-                                <th scope="col">Username</th>
-                                <th scope="col">Role</th>
-                                <th scope="col">Aksi</th>
+                                <td>{{ $user->user_name }}</td>
+                                <td>{{ $user->role }}</td>
+                                <td>
+                                    <a href="{{ route('user.edit', $user->id) }}" class="btn-cafe" style="background:var(--cafe-chamoisee);color:var(--cafe-beige);padding:0.3rem 1rem;font-size:0.95rem;">Edit</a>
+                                    <form action="{{ route('user.destroy', $user->id) }}" method="POST" style="display:inline-block;" class="delete-form">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-cafe" style="background:var(--cafe-bistre);color:var(--cafe-beige);padding:0.3rem 1rem;font-size:0.95rem;">Hapus</button>
+                                    </form>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($users as $user)
-                                <tr>
-                                    <td>{{ $user->user_name }}</td>
-                                    <td>{{ $user->role }}</td>
-
-                                    <td>
-                                        <a href="{{ route('user.edit', $user->id) }}"
-                                            class="btn btn-warning btn-sm">Edit</a>
-                                        <form action="{{ route('user.destroy', $user->id) }}" method="POST"
-                                            style="display:inline-block;" class="delete-form">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

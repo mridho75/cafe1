@@ -1,11 +1,9 @@
         <!-- Footer -->
-        <footer class="footer px-4">
+        <footer class="footer-cafe px-4">
             <div class="row align-items-center justify-content-xl-between">
                 <div class="col-xl-6">
-                    <div class="copyright text-center text-xl-left text-muted">
-                        © {{ date('Y') }} <a href="https://www.creative-tim.com"
-                            class="font-weight-bold ml-1 link-offset-2 link-underline link-underline-opacity-0"
-                            target="_blank">Creative Tim</a>
+                    <div class="copyright text-center text-xl-left text-cafe-bistre">
+                        © {{ date('Y') }} <span class="font-weight-bold ml-1">Minano Cafe</span>
                     </div>
                 </div>
                 <div class="col-xl-6">
