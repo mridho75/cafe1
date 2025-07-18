@@ -5,15 +5,14 @@
 
 @section('content')
     <div class="container mt-5">
-
-        <div class="card-cafe">
+        <div class="card" style="background:#fff;box-shadow:0 6px 24px 0 rgba(61,33,26,0.12);border-radius:1.25rem;padding:2rem 1.5rem;">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h4 class="mb-0" style="color:var(--cafe-coffee);font-weight:700;">Daftar User</h4>
-                <a href="{{ route('user.create') }}" class="btn-cafe">Tambah User</a>
+                <h4 class="mb-0" style="color:#3D211A;font-weight:800;">Daftar User</h4>
+                <a href="{{ route('user.create') }}" class="btn" style="background:#A07856;color:#fff;font-weight:600;border-radius:0.75rem;padding:0.5rem 1.5rem;">Tambah User</a>
             </div>
             <div class="table-responsive">
-                <table class="table align-items-center" style="background:var(--cafe-beige);">
-                    <thead style="background:var(--cafe-khaki);color:var(--cafe-bistre);">
+                <table class="table align-items-center" style="background:#F5F5DC;border-radius:1rem;overflow:hidden;">
+                    <thead style="background:#CBB799;color:#3D211A;font-weight:700;">
                         <tr>
                             <th scope="col">Username</th>
                             <th scope="col">Role</th>
@@ -23,14 +22,14 @@
                     <tbody>
                         @foreach ($users as $user)
                             <tr>
-                                <td>{{ $user->user_name }}</td>
-                                <td>{{ $user->role }}</td>
+                                <td style="color:#3D211A;font-weight:600;">{{ $user->user_name }}</td>
+                                <td style="color:#3D211A;">{{ $user->role }}</td>
                                 <td>
-                                    <a href="{{ route('user.edit', $user->id) }}" class="btn-cafe" style="background:var(--cafe-chamoisee);color:var(--cafe-beige);padding:0.3rem 1rem;font-size:0.95rem;">Edit</a>
+                                    <a href="{{ route('user.edit', $user->id) }}" class="btn" style="background:#A07856;color:#fff;font-weight:600;border-radius:0.5rem;padding:0.3rem 1rem;font-size:0.95rem;">Edit</a>
                                     <form action="{{ route('user.destroy', $user->id) }}" method="POST" style="display:inline-block;" class="delete-form">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn-cafe" style="background:var(--cafe-bistre);color:var(--cafe-beige);padding:0.3rem 1rem;font-size:0.95rem;">Hapus</button>
+                                        <button type="submit" class="btn" style="background:#3D211A;color:#fff;font-weight:600;border-radius:0.5rem;padding:0.3rem 1rem;font-size:0.95rem;">Hapus</button>
                                     </form>
                                 </td>
                             </tr>

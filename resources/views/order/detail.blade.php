@@ -77,7 +77,7 @@
 
 <body>
     <div class="receipt">
-        <img src="{{ asset('assets') }}/img/brand/logo.png" alt="Logo">
+        <img src="{{ asset('assets') }}/img/brand/logo.png" alt="Minano Coffee" style="max-height:70px;max-width:120px;object-fit:contain;">
 
         <h5>Order #{{ $order->id }}</h5>
         <hr>

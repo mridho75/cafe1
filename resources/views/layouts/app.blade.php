@@ -18,6 +18,130 @@
     <!-- Custom Cafe Color Palette & UI -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
+    <style>
+        @media (max-width: 900px) {
+            html, body {
+                width: 100vw !important;
+                min-width: 0 !important;
+                max-width: 100vw !important;
+                overflow-x: hidden !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .container, .container-fluid, .row, .card, .card-cafe, .shadow, nav.topbar-glass {
+                width: 100vw !important;
+                min-width: 0 !important;
+                max-width: 100vw !important;
+                margin: 0 !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+        }
+        /* Responsive container & card */
+        .container, .container-fluid {
+            width: 100% !important;
+            max-width: 100vw;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        .card, .card-cafe, .shadow, .shadow-lg {
+            max-width: 100%;
+            overflow-x: auto;
+        }
+        /* Responsive table */
+        table {
+            width: 100% !important;
+            min-width: 600px;
+        }
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+        /* Responsive form */
+        .form-control, .form-select {
+            min-width: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        /* Utility for gap and flex on mobile */
+        @media (max-width: 900px) {
+            .container, .container-fluid {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            .card, .card-cafe, .shadow, .shadow-lg {
+                padding: 1rem 0.7rem;
+            }
+            .row, .d-flex {
+                flex-direction: column !important;
+                gap: 0.7rem !important;
+            }
+            .col-lg-8, .col-lg-7, .col-md-10, .col-md-9 {
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 0 !important;
+            }
+            .table-responsive, table {
+                min-width: 0;
+            }
+            .form-control, .form-select {
+                font-size: 1rem;
+            }
+        }
+        @media (max-width: 600px) {
+            .container, .container-fluid {
+                padding-left: 0.2rem;
+                padding-right: 0.2rem;
+            }
+            .card, .card-cafe, .shadow, .shadow-lg {
+                padding: 0.7rem 0.3rem;
+            }
+            .fw-bold, h1, h2, h3, h4, h5 {
+                font-size: 1rem !important;
+            }
+            .form-label, label {
+                font-size: 0.97rem !important;
+            }
+        }
+        /* Additional global responsive improvements */
+        @media (max-width: 480px) {
+            html, body {
+                overflow-x: hidden !important;
+                max-width: 100vw !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .container, .container-fluid, .row, .card, .card-cafe, .shadow, nav.topbar-glass {
+                max-width: 100vw !important;
+                width: 100vw !important;
+                margin: 0 !important;
+                padding-left: 0.5rem !important;
+                padding-right: 0.5rem !important;
+                overflow-x: hidden !important;
+            }
+            .btn-cafe {
+                padding: 0.4rem 1rem;
+                font-size: 0.9rem;
+            }
+            .card-cafe {
+                padding: 1rem;
+            }
+            .table-responsive {
+                font-size: 0.9rem;
+            }
+            .navbar-cafe {
+                padding: 0.5rem 1rem;
+                font-size: 1rem;
+            }
+            .sidebar-cafe {
+                font-size: 0.9rem;
+            }
+            .footer-cafe {
+                font-size: 0.9rem;
+                padding: 0.5rem 1rem;
+            }
+        }
+    </style>
 </head>
 
 <style>
@@ -30,11 +154,10 @@
 <body>
     @include('layouts.sidebar')
 
-    <div class="main-content">
-        <div class="header bg-gradient-default pb-4 pt-5 pt-md-6">
+    <div class="main-content" style="background:#F5F5DC;min-height:100vh;">
+        <div class="header" style="background:#F5F5DC;padding-bottom:0.5rem;padding-top:2.5rem;">
             <div class="container-fluid">
                 <div class="header-body">
-
                     {{-- Optional header card --}}
                     @include('layouts.topbar')
                 </div>
@@ -45,25 +168,11 @@
             <pre>{{ print_r(session('debug'), true) }}</pre>
         @endif
 
-
-        {{-- @if (session('error'))
-            <div class="alert card-cafe" style="background:var(--cafe-chamoisee);color:var(--cafe-beige);border-left:6px solid var(--cafe-bistre);margin:1rem 0;">
-                {{ session('error') }}
-
+        <div class="container-fluid" style="margin-top:0;max-width:100vw;">
+            <div style="background:#fff;min-height:calc(100vh - 80px);padding:2.5rem 2.5rem 2.5rem 2.5rem;border-radius:1.5rem;box-shadow:0 4px 24px 0 rgba(61,33,26,0.08);">
+                @yield('content')
+                @include('layouts.footer')
             </div>
-        @endif
-
-        @if (session('success'))
-            <div class="alert card-cafe" style="background:var(--cafe-khaki);color:var(--cafe-bistre);border-left:6px solid var(--cafe-coffee);margin:1rem 0;">
-                {{ session('success') }}
-
-            </div>
-        @endif --}}
-
-        <div class="container-fluid mt--4">
-            @yield('content')
-
-            @include('layouts.footer')
         </div>
     </div>
 
