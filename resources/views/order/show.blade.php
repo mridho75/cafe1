@@ -20,9 +20,7 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <p><strong>Nama Kasir:</strong> {{ $order->user->user_name ?? '-' }}</p>
-                        <p><strong>Nama Pelanggan Reservasi:</strong> {{ $order->reservasi->nama_pelanggan ?? '-' }}</p>
-                        <p><strong>Nama Member:</strong> {{ $order->reservasi->member->nama_members ?? 'Tidak ada' }}</p>
-                        <!-- Menampilkan nama member -->
+                        <!-- ...existing code... -->
                     </div>
                     <div class="col-md-6">
                         <p><strong>Tanggal:</strong> {{ $order->tgl }}</p>

@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('title', 'Laporan')
-@section('judul', 'Laporan Page')
+@section('judul', 'Laporan')
+@section('page-title', 'Laporan')
+@section('page-desc', 'Lihat dan ekspor laporan pemasukan cafe')
 
 @section('content')
     <style>
@@ -191,14 +193,12 @@
                             <tr>
                                 <th scope="col">Tanggal</th>
                                 <th scope="col">Nama Kasir</th>
-                                <th scope="col">Reservasi</th>
-                                <th scope="col">Member</th>
                                 <th scope="col">Menu</th>
                                 <th scope="col">Qty</th>
                                 <th scope="col">Harga Satuan</th>
                                 <th scope="col">Subtotal</th>
                                 <th scope="col">Jumlah Bayar</th>
-                                <th scope="col">DP</th>
+                                <!-- ...existing code... -->
                                 <th scope="col">Kembalian</th>
                                 <th scope="col">Pemasukan</th>
                             </tr>
@@ -208,7 +208,6 @@
                                 @php
                                     $detailCount = $order->detailOrders->count();
                                     $pemasukan = $order->detailOrders->sum('subtotal');
-                                    $dp = $order->reservasi->dp ?? 0; // Ambil DP jika ada reservasi
                                 @endphp
                                 @foreach ($order->detailOrders as $index => $detail)
                                     <tr>
@@ -217,17 +216,6 @@
                                                 {{ \Carbon\Carbon::parse($order->tgl)->translatedFormat('j F Y') }}
                                             </td>
                                             <td rowspan="{{ $detailCount }}">{{ $order->user->user_name }}</td>
-                                            <td rowspan="{{ $detailCount }}">
-                                                @if ($order->reservasi)
-                                                    {{ $order->reservasi->nama_pelanggan ?? '-' }}<br>
-                                                    Meja: {{ $order->reservasi->nomor_meja ?? '-' }}
-                                                @else
-                                                    Tidak Ada
-                                                @endif
-                                            </td>
-                                            <td rowspan="{{ $detailCount }}">
-                                                {{ $order->member->nama_members ?? 'Tidak Ada' }}
-                                            </td>
                                         @endif
 
                                         <td>{{ $detail->menu->nama_menu }}</td>
@@ -239,9 +227,7 @@
                                             <td rowspan="{{ $detailCount }}">Rp
                                                 {{ number_format($order->jml_bayar, 2, ',', '.') }}
                                             </td>
-                                            <td rowspan="{{ $detailCount }}">Rp
-                                                {{ number_format($dp, 2, ',', '.') }}
-                                            </td>
+                                            <!-- ...existing code... -->
                                             <td rowspan="{{ $detailCount }}">Rp
                                                 {{ number_format($order->kembalian, 2, ',', '.') }}
                                             </td>

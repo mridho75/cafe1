@@ -51,8 +51,7 @@
         <tr>
             <th>No</th>
             <th>Kasir</th>
-            <th>Reservasi</th>
-            <th>Member</th>
+            <!-- ...existing code... -->
             <th>Tanggal</th>
             <th>Pembayaran</th>
             <th>Total Harga</th>
@@ -66,8 +65,7 @@
             <tr>
                 <td>{{ ($orders->currentPage() - 1) * $orders->perPage() + $loop->iteration }}</td>
                 <td>{{ $order->user->user_name }}</td>
-                <td>{{ $order->reservasi->nama_pelanggan ?? 'Tidak ada' }}</td>
-                <td>{{ $order->member->nama_members ?? 'Tidak ada' }}</td>
+                <!-- ...existing code... -->
                 <td>{{ $order->tgl }}</td>
                 <td>{{ $order->metodePembayaran->nama_metode ?? 'Tidak ada' }}</td>
                 <td>Rp. {{ number_format($order->total_harga, 0, ',', '.') }}</td>

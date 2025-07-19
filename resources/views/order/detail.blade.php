@@ -84,8 +84,7 @@
 
         <p><strong>Tanggal:</strong> {{ $order->tgl }}</p>
         <p><strong>Kasir:</strong> {{ $order->user->user_name ?? '-' }}</p>
-        <p><strong>Reservasi:</strong> {{ $order->reservasi->nama_pelanggan ?? '-' }}</p>
-        <p><strong>Member:</strong> {{ $order->member->nama_members ?? '-' }}</p>
+        <!-- ...existing code... -->
 
         <hr>
         <table>

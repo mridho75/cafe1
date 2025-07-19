@@ -30,7 +30,6 @@ class DashboardController extends Controller
 
         $totalMenu = Menu::count();
         $totalOrder = Order::count();
-        $totalReservasi = Reservasi::count();
         $recentOrders = Order::with('user')->latest()->limit(5)->get();
 
         $period = new \DatePeriod(
@@ -41,7 +40,6 @@ class DashboardController extends Controller
 
         $dates = [];
         $totals = [];
-        $reservasiTotals = [];
         $pendapatanTotals = [];
 
         foreach ($period as $date) {
@@ -49,7 +47,6 @@ class DashboardController extends Controller
             $dates[] = $formattedDate;
 
             $totals[] = Order::whereDate('tgl', $formattedDate)->count();
-            $reservasiTotals[] = Reservasi::whereDate('tanggal_dibuat', $formattedDate)->count();
             $pendapatanTotals[] = Order::whereDate('tgl', $formattedDate)
                 ->with('detailOrders')
                 ->get()
@@ -58,7 +55,7 @@ class DashboardController extends Controller
                 });
         }
 
-        // Bulan ini & bulan lalu untuk transaksi dan reservasi
+        // Bulan ini & bulan lalu untuk transaksi
         $thisMonthStart = Carbon::now()->startOfMonth();
         $thisMonthEnd = Carbon::now()->endOfMonth();
 
@@ -67,9 +64,6 @@ class DashboardController extends Controller
 
         $orderThisMonth = Order::whereBetween('tgl', [$thisMonthStart, $thisMonthEnd])->count();
         $orderLastMonth = Order::whereBetween('tgl', [$lastMonthStart, $lastMonthEnd])->count();
-
-        $reservasiThisMonth = Reservasi::where('created_at', '>=', $thisMonthStart)->count();
-        $reservasiLastMonth = Reservasi::whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])->count();
 
         // Pendapatan hari ini
         $pendapatanHariIni = Order::whereDate('tgl', Carbon::today())
@@ -89,24 +83,20 @@ class DashboardController extends Controller
             ->sum(fn($order) => $order->detailOrders->sum('subtotal'));
 
         $orderChange = $this->calculatePercentageChange($orderLastMonth, $orderThisMonth);
-        $reservasiChange = $this->calculatePercentageChange($reservasiLastMonth, $reservasiThisMonth);
         $pendapatanChange = $this->calculatePercentageChange($pendapatanLastMonth, $pendapatanThisMonth);
 
         return view('dashboard.dashboard', compact(
             'totalMenu',
             'totalOrder',
-            'totalReservasi',
             'recentOrders',
             'dates',
             'totals',
-            'reservasiTotals',
             'pendapatanTotals',
             'startDate',
             'endDate',
             'inputStartDate',
             'inputEndDate',
             'orderChange',
-            'reservasiChange',
             'pendapatanHariIni',
             'pendapatanThisMonth',
             'pendapatanChange'

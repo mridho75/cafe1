@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Category')
-@section('judul', 'Category Page')
+@section('title', 'Kategori')
+@section('judul', 'Kategori')
+@section('page-title', 'Kategori')
+@section('page-desc', 'Kelola dan lihat daftar kategori menu')
 
 @section('content')
     <div class="container mt-5">

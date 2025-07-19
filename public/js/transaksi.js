@@ -1,19 +1,16 @@
 const keranjang = {};
 const keranjangList = document.getElementById("keranjang-list");
 const subtotalDisplay = document.getElementById("subtotal-display");
-const subtotalAfterDpDisplay = document.getElementById(
-    "subtotalAfterDpDisplay"
-);
+// ...existing code...
 const kembalianDisplay = document.getElementById("kembalianDisplay");
 const csrfToken = document
     .querySelector('meta[name="csrf-token"]')
     .getAttribute("content");
-const dpDisplay = document.getElementById("dpDisplay");
-const idReservasiSelect = document.getElementById("id_reservasi");
+// ...existing code...
 const metodePembayaranSelect = document.getElementById("id_metode_pembayaran");
 const jumlahBayarInput = document.getElementById("jumlahBayar");
 
-let dpValue = 0; // Nilai DP yang aktif
+// ...existing code...
 
 document.addEventListener("DOMContentLoaded", function () {
     const btnReset = document.getElementById("btn-reset-keranjang");
@@ -71,7 +68,6 @@ document.addEventListener("DOMContentLoaded", function () {
 function updateKeranjang() {
     keranjangList.innerHTML = "";
     let total = 0;
-
     for (const id in keranjang) {
         const item = keranjang[id];
         const subtotal = item.qty * item.harga;
@@ -108,38 +104,25 @@ function updateKeranjang() {
     subtotalDisplay.textContent = total.toLocaleString("id-ID");
 
     document.getElementById("modal-subtotal-hidden").value = total;
-
-    updateModalSubtotalAfterDP(total);
-}
-
-function updateModalSubtotalAfterDP(subtotal) {
-    const totalAfterDp = subtotal - dpValue;
-    subtotalAfterDpDisplay.value = `Rp ${(totalAfterDp > 0
-        ? totalAfterDp
-        : 0
-    ).toLocaleString("id-ID")}`;
-
-    // Sesuaikan jumlah bayar input kalau metode pembayaran bukan tunai (id 1)
+    // Update jumlah bayar input kalau metode pembayaran bukan tunai (id 1)
     if (metodePembayaranSelect.value !== "1") {
-        jumlahBayarInput.value = totalAfterDp > 0 ? totalAfterDp : 0;
+        jumlahBayarInput.value = total > 0 ? total : 0;
         jumlahBayarInput.setAttribute("readonly", "readonly");
     } else {
         jumlahBayarInput.value = "";
         jumlahBayarInput.removeAttribute("readonly");
     }
-
     // Update kembalian sesuai input jumlah bayar
     updateKembalian();
 }
 
+// ...existing code...
+
 function updateKembalian() {
     const jumlahBayar = parseInt(jumlahBayarInput.value) || 0;
-    const subtotal =
-        parseInt(document.getElementById("modal-subtotal-hidden").value) || 0;
-    const totalBayar = subtotal - dpValue;
-    const kembalian = jumlahBayar - (totalBayar > 0 ? totalBayar : 0);
-    kembalianDisplay.textContent =
-        kembalian >= 0 ? kembalian.toLocaleString("id-ID") : 0;
+    const subtotal = parseInt(document.getElementById("modal-subtotal-hidden").value) || 0;
+    const kembalian = jumlahBayar - (subtotal > 0 ? subtotal : 0);
+    kembalianDisplay.textContent = kembalian >= 0 ? kembalian.toLocaleString("id-ID") : 0;
 }
 
 // Event handler tombol tambah
@@ -211,24 +194,18 @@ document.querySelectorAll(".btn-kurang").forEach((btn) => {
     });
 });
 
-// Event ketika memilih reservasi (update dpValue dan tampilkan DP)
-idReservasiSelect.addEventListener("change", function () {
-    const selectedOption = this.options[this.selectedIndex];
-    dpValue = parseInt(selectedOption.getAttribute("data-dp")) || 0;
-
-    dpDisplay.value = `Rp ${dpValue.toLocaleString("id-ID")}`;
-
-    // Update total bayar setelah DP di modal
-    updateModalSubtotalAfterDP(
-        parseInt(document.getElementById("modal-subtotal-hidden").value) || 0
-    );
-});
+// ...existing code...
 
 // Event ketika metode pembayaran berubah
 metodePembayaranSelect.addEventListener("change", function () {
-    updateModalSubtotalAfterDP(
-        parseInt(document.getElementById("modal-subtotal-hidden").value) || 0
-    );
+    if (metodePembayaranSelect.value !== "1") {
+        jumlahBayarInput.value = document.getElementById("modal-subtotal-hidden").value || 0;
+        jumlahBayarInput.setAttribute("readonly", "readonly");
+    } else {
+        jumlahBayarInput.value = "";
+        jumlahBayarInput.removeAttribute("readonly");
+    }
+    updateKembalian();
 });
 
 // Event input jumlah bayar update kembalian
@@ -246,18 +223,7 @@ document.getElementById("btn-simpan").addEventListener("click", function () {
         return;
     }
 
-    // Reset dpValue dari pilihan reservasi (jika ada)
-    dpValue =
-        parseInt(
-            idReservasiSelect.options[
-                idReservasiSelect.selectedIndex
-            ]?.getAttribute("data-dp")
-        ) || 0;
-
-    // Update modal subtotal after DP sebelum buka modal
-    updateModalSubtotalAfterDP(
-        parseInt(document.getElementById("modal-subtotal-hidden").value) || 0
-    );
+    // ...existing code...
 
     const modal = new bootstrap.Modal(
         document.getElementById("modalPembayaran")
@@ -269,11 +235,10 @@ document.getElementById("btn-simpan").addEventListener("click", function () {
 document.getElementById("form-modal").addEventListener("submit", function (e) {
     e.preventDefault();
 
+
     const jumlahBayar = Number(jumlahBayarInput.value);
-    const subtotal = Number(
-        document.getElementById("modal-subtotal-hidden").value
-    );
-    const totalBayar = subtotal - dpValue;
+    const subtotal = Number(document.getElementById("modal-subtotal-hidden").value);
+    const totalBayar = subtotal;
     const idMetodePembayaran = metodePembayaranSelect.value;
 
     if (!idMetodePembayaran) {
@@ -297,16 +262,10 @@ document.getElementById("form-modal").addEventListener("submit", function (e) {
     const formData = new FormData();
     formData.append("_token", csrfToken);
     formData.append("id_user", document.getElementById("id_user")?.value ?? "");
-    formData.append("id_reservasi", idReservasiSelect.value);
-    formData.append(
-        "id_member",
-        document.getElementById("id_member")?.value ?? ""
-    );
     formData.append("tgl", document.getElementById("tgl")?.value ?? "");
     formData.append("id_metode_pembayaran", idMetodePembayaran);
     formData.append("jumlah_bayar", jumlahBayar);
     formData.append("kembalian", jumlahBayar - totalBayar);
-    formData.append("dp_reservasi", dpValue);
 
     // Kirim data menu
     Object.entries(keranjang).forEach(([id, item]) => {
@@ -364,9 +323,7 @@ function resetTransaksiUI() {
 
     // Reset display subtotal, DP, dan kembalian
     subtotalDisplay.textContent = "0";
-    subtotalAfterDpDisplay.value = "Rp 0";
     kembalianDisplay.textContent = "0";
-    dpDisplay.value = "Rp 0";
 
     // Reset input form
     jumlahBayarInput.value = "";

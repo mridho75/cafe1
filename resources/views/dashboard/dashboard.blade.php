@@ -161,62 +161,9 @@
 </style>
 <div class="container py-4 dashboard-bg">
     <div class="row" style="margin-bottom:0.5rem;">
-        <!-- Total Menu -->
-        <div class="col-xl-4 col-lg-6 mb-4">
-            <div class="card card-cafe dashboard-metric-card">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <div class="dashboard-metric-title">Total Menu</div>
-                            <div class="dashboard-metric-value">{{ $totalMenu ?? 0 }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <div class="icon-circle">
-                                <i class="fas fa-utensils"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Total Transaksi -->
-        <div class="col-xl-4 col-lg-6 mb-4">
-            <div class="card card-cafe dashboard-metric-card">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <div class="dashboard-metric-title">Total Transaksi</div>
-                            <div class="dashboard-metric-value">{{ $totalOrder ?? 0 }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <div class="icon-circle">
-                                <i class="fas fa-money-bill-wave"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Total Reservasi -->
-        <div class="col-xl-4 col-lg-6 mb-4">
-            <div class="card card-cafe dashboard-metric-card">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <div class="dashboard-metric-title">Total Reservasi</div>
-                            <div class="dashboard-metric-value">{{ $totalReservasi ?? 0 }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <div class="icon-circle" style="background:#6F4D38;">
-                                <i class="fas fa-calendar-check"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- ...existing code... -->
     </div>
 
     <div class="row">
@@ -316,7 +263,6 @@
 <script>
     const dates = {!! json_encode($dates) !!};
     const transaksiData = {!! json_encode($totals) !!};
-    const reservasiData = {!! json_encode($reservasiTotals) !!};
     const pendapatanData = {!! json_encode($pendapatanTotals) !!};
 
     const options = {
@@ -330,10 +276,6 @@
         series: [{
                 name: 'Transaksi',
                 data: transaksiData
-            },
-            {
-                name: 'Reservasi',
-                data: reservasiData
             },
             {
                 name: 'Pendapatan',

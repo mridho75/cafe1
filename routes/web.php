@@ -43,11 +43,9 @@ Route::middleware([AuthSession::class])->group(function () {
     Route::resource('category', CategoriesController::class);
 
     // Member
-    Route::resource('member', MemberController::class);
-
     // Reservasi
-    Route::resource('reservasi', ReservasiController::class);
-    Route::post('/reservasi/{id}/pakai', [ReservasiController::class, 'pakaiReservasi'])->name('reservasi.pakai');
+    // Fitur member & reservasi dihapus
+
 
 
     // Transaksi (Order)

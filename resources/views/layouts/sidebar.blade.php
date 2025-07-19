@@ -108,17 +108,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center gap-2 @if(request()->routeIs('member.*')) active-sidebar @endif" href="{{ route('member.index') }}" style="color:#fff;padding:0.75rem 1rem;border-radius:0.75rem;transition:background 0.2s, color 0.2s;" onmouseover="this.style.background='#6F4D38';this.style.color='#fff'" onmouseout="if(!this.classList.contains('active-sidebar')){this.style.background='transparent';this.style.color='#fff'}" @if(request()->routeIs('member.*')) style="background:#A07856;color:#fff;" @endif>
-                            <i class="ni ni-badge" style="color:#fff;"></i> <span>Member</span>
-                        </a>
-                    </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center gap-2 @if(request()->routeIs('reservasi.*')) active-sidebar @endif" href="{{ route('reservasi.index') }}" style="color:#fff;padding:0.75rem 1rem;border-radius:0.75rem;transition:background 0.2s, color 0.2s;" onmouseover="this.style.background='#6F4D38';this.style.color='#fff'" onmouseout="if(!this.classList.contains('active-sidebar')){this.style.background='transparent';this.style.color='#fff'}" @if(request()->routeIs('reservasi.*')) style="background:#A07856;color:#fff;" @endif>
-                            <i class="ni ni-calendar-grid-58" style="color:#fff;"></i> <span>Reservasi</span>
-                        </a>
-                    </li>
 
                     <li class="nav-item">
                         <a class="nav-link d-flex align-items-center gap-2 @if(request()->routeIs('kasir.create_order')) active-sidebar @endif" href="{{ route('kasir.create_order') }}" style="color:#fff;padding:0.75rem 1rem;border-radius:0.75rem;transition:background 0.2s, color 0.2s;" onmouseover="this.style.background='#6F4D38';this.style.color='#fff'" onmouseout="if(!this.classList.contains('active-sidebar')){this.style.background='transparent';this.style.color='#fff'}" @if(request()->routeIs('kasir.create_order')) style="background:#A07856;color:#fff;" @endif>

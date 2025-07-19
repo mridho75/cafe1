@@ -29,19 +29,31 @@ class LaporanExport implements FromCollection, WithHeadings, WithMapping, WithSt
 
     public function collection()
     {
-        $query = Order::with(['detailOrders.menu', 'user', 'reservasi', 'member']);
-
+        $query = Order::with(['detailOrders.menu', 'user']);
         if ($this->from && $this->to) {
             $query->whereBetween('tgl', [$this->from, $this->to]);
         }
-
         $orders = $query->get();
-
-        $this->totalPendapatan = $orders->sum(function ($order) {
-            return $order->detailOrders->sum('subtotal');
-        });
-
-        return $orders;
+        $rows = collect();
+        $this->totalPendapatan = 0;
+        foreach ($orders as $order) {
+            $pemasukan = $order->detailOrders->sum('subtotal');
+            $this->totalPendapatan += $pemasukan;
+            foreach ($order->detailOrders as $detail) {
+                $rows->push([
+                    'tgl' => $order->tgl,
+                    'user_name' => $order->user->user_name,
+                    'menu' => $detail->menu->nama_menu,
+                    'qty' => $detail->qty,
+                    'harga_satuan' => $detail->harga_satuan,
+                    'subtotal' => $detail->subtotal,
+                    'jml_bayar' => $order->jml_bayar,
+                    'kembalian' => $order->kembalian,
+                    'pemasukan' => $pemasukan,
+                ]);
+            }
+        }
+        return $rows;
     }
 
     public function headings(): array
@@ -49,47 +61,28 @@ class LaporanExport implements FromCollection, WithHeadings, WithMapping, WithSt
         return [
             'Tanggal',
             'Nama Kasir',
-            'Reservasi',
-            'Member',
-            'Menu & Qty',
+            'Menu',
+            'Qty',
             'Harga Satuan',
             'Subtotal',
             'Jumlah Bayar',
-            'DP',
             'Kembalian',
             'Pemasukan',
         ];
     }
 
-    public function map($order): array
+    public function map($row): array
     {
-        $menuQty = $order->detailOrders->map(function ($detail) {
-            return $detail->menu->nama_menu . ' x ' . $detail->qty;
-        })->implode("\n");
-
-        $hargaSatuan = $order->detailOrders->map(function ($detail) {
-            return 'Rp ' . number_format($detail->harga_satuan, 0, ',', '.');
-        })->implode("\n");
-
-        $subtotalList = $order->detailOrders->map(function ($detail) {
-            return 'Rp ' . number_format($detail->subtotal, 0, ',', '.');
-        })->implode("\n");
-
-        $pemasukan = $order->detailOrders->sum('subtotal');
-        $dp = $order->reservasi->dp ?? 0;
-
         return [
-            Carbon::parse($order->tgl)->translatedFormat('d F Y'),
-            $order->user->user_name,
-            $order->reservasi->nama_pelanggan ?? '-',
-            $order->member->nama_members ?? '-',
-            $menuQty,
-            $hargaSatuan,
-            $subtotalList,
-            'Rp ' . number_format($order->jml_bayar, 0, ',', '.'),
-            'Rp ' . number_format($dp, 0, ',', '.'),
-            'Rp ' . number_format($order->kembalian, 0, ',', '.'),
-            'Rp ' . number_format($pemasukan, 0, ',', '.'),
+            Carbon::parse($row['tgl'])->translatedFormat('d F Y'),
+            $row['user_name'],
+            $row['menu'],
+            $row['qty'],
+            'Rp ' . number_format($row['harga_satuan'], 0, ',', '.'),
+            'Rp ' . number_format($row['subtotal'], 0, ',', '.'),
+            'Rp ' . number_format($row['jml_bayar'], 0, ',', '.'),
+            'Rp ' . number_format($row['kembalian'], 0, ',', '.'),
+            'Rp ' . number_format($row['pemasukan'], 0, ',', '.'),
         ];
     }
 
@@ -124,7 +117,7 @@ class LaporanExport implements FromCollection, WithHeadings, WithMapping, WithSt
         $sheet->getRowDimension(4)->setRowHeight(5);
 
         // Header styling row 5
-        $sheet->getStyle('A5:K5')->applyFromArray([
+        $sheet->getStyle('A5:I5')->applyFromArray([
             'font' => [
                 'bold' => true,
                 'color' => ['argb' => 'FFFFFFFF'],
@@ -148,7 +141,7 @@ class LaporanExport implements FromCollection, WithHeadings, WithMapping, WithSt
 
         // Data styling A6:K last row (abu abu muda)
         $highestRow = $sheet->getHighestRow();
-        $sheet->getStyle("A6:K{$highestRow}")->applyFromArray([
+        $sheet->getStyle("A6:I{$highestRow}")->applyFromArray([
             'fill' => [
                 'fillType' => Fill::FILL_SOLID,
                 'startColor' => ['argb' => 'FFF2F2F2'],
@@ -166,8 +159,8 @@ class LaporanExport implements FromCollection, WithHeadings, WithMapping, WithSt
         ]);
 
         // Set column widths (adjust untuk A4 landscape)
-        foreach(range('A', 'K') as $columnID) {
-            if (in_array($columnID, ['E', 'F', 'G'])) {
+        foreach(range('A', 'I') as $columnID) {
+            if (in_array($columnID, ['E', 'F', 'G', 'H', 'I'])) {
                 $sheet->getColumnDimension($columnID)->setWidth(15);
             } else {
                 $sheet->getColumnDimension($columnID)->setWidth(10);

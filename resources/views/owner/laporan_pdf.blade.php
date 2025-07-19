@@ -90,14 +90,11 @@
                 <tr>
                     <th>Tanggal</th>
                     <th>Nama Kasir</th>
-                    <th>Reservasi</th>
-                    <th>Member</th>
                     <th>Menu</th>
-                    <th class="qty">Qty</th>
+                    <th>Qty</th>
                     <th>Harga Satuan</th>
                     <th>Subtotal</th>
                     <th>Jumlah Bayar</th>
-                    <th>DP</th>
                     <th>Kembalian</th>
                     <th>Pemasukan</th>
                 </tr>
@@ -107,37 +104,21 @@
                     @php
                         $detailCount = $order->detailOrders->count();
                         $pemasukan = $order->detailOrders->sum('subtotal');
-                        $dp = $order->reservasi->dp ?? 0;
                     @endphp
                     @foreach ($order->detailOrders as $index => $detail)
                         <tr>
-                            @if ($index === 0)
-                                <td class="tgl" rowspan="{{ $detailCount }}">
-                                    {{ \Carbon\Carbon::parse($order->tgl)->translatedFormat('d F Y') }}</td>
+                            @if ($index == 0)
+                                <td rowspan="{{ $detailCount }}">{{ \Carbon\Carbon::parse($order->tgl)->translatedFormat('d F Y') }}</td>
                                 <td rowspan="{{ $detailCount }}">{{ $order->user->user_name }}</td>
-                                <td rowspan="{{ $detailCount }}">
-                                    @if ($order->reservasi)
-                                        {{ $order->reservasi->nama_pelanggan ?? '-' }}<br>
-                                        Meja: {{ $order->reservasi->nomor_meja ?? '-' }}
-                                    @else
-                                        Tidak Ada
-                                    @endif
-                                </td>
-                                <td rowspan="{{ $detailCount }}">{{ $order->member->nama_members ?? 'Tidak Ada' }}</td>
                             @endif
-                            <td class="menu">{{ $detail->menu->nama_menu }}</td>
-                            <td class="qty">{{ $detail->qty }}</td>
-                            <td class="harga">Rp {{ number_format($detail->harga_satuan, 2, ',', '.') }}</td>
-                            <td class="harga">Rp {{ number_format($detail->subtotal, 2, ',', '.') }}</td>
-                            @if ($index === 0)
-                                <td class="harga" rowspan="{{ $detailCount }}">Rp
-                                    {{ number_format($order->jml_bayar, 2, ',', '.') }}</td>
-                                <td class="dp" rowspan="{{ $detailCount }}">Rp
-                                    {{ number_format($dp, 2, ',', '.') }}</td>
-                                <td class="harga" rowspan="{{ $detailCount }}">Rp
-                                    {{ number_format($order->kembalian, 2, ',', '.') }}</td>
-                                <td class="harga" rowspan="{{ $detailCount }}">Rp
-                                    {{ number_format($pemasukan, 2, ',', '.') }}</td>
+                            <td>{{ $detail->menu->nama_menu }}</td>
+                            <td>{{ $detail->qty }}</td>
+                            <td>Rp {{ number_format($detail->harga_satuan, 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($detail->subtotal, 0, ',', '.') }}</td>
+                            @if ($index == 0)
+                                <td rowspan="{{ $detailCount }}">Rp {{ number_format($order->jml_bayar, 0, ',', '.') }}</td>
+                                <td rowspan="{{ $detailCount }}">Rp {{ number_format($order->kembalian, 0, ',', '.') }}</td>
+                                <td rowspan="{{ $detailCount }}">Rp {{ number_format($pemasukan, 0, ',', '.') }}</td>
                             @endif
                         </tr>
                     @endforeach

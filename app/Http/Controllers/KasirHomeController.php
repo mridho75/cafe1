@@ -25,13 +25,11 @@ class KasirHomeController extends Controller
         $tanggal = $request->tanggal;
 
         if ($tanggal) {
-            $riwayatOrder = Order::with(['reservasi', 'member'])
-                ->whereDate('tgl', $tanggal)
+            $riwayatOrder = Order::whereDate('tgl', $tanggal)
                 ->orderBy('tgl', 'desc')
                 ->get();
         } else {
-            $riwayatOrder = Order::with(['reservasi', 'member'])
-                ->latest()
+            $riwayatOrder = Order::latest()
                 ->take(10)
                 ->get();
         }
@@ -52,16 +50,11 @@ class KasirHomeController extends Controller
         // Ambil semua kategori beserta menu-menu di dalamnya
         $categories = Categories::with('menus')->get();
 
-        // Ambil reservasi yang belum dipakai di order manapun
-        $usedReservasiIds = Order::whereNotNull('id_reservasi')->pluck('id_reservasi')->toArray();
-
-        $reservasis = Reservasi::whereNotIn('id', $usedReservasiIds)->get();
-
-        $members = Member::where('status', 'aktif')->get();
+        // ...existing code...
 
         $metodePembayarans = MetodePembayaran::all();
 
-        return view('kasir.create_order', compact('categories', 'reservasis', 'members', 'loggedInUser', 'metodePembayarans'));
+        return view('kasir.create_order', compact('categories', 'loggedInUser', 'metodePembayarans'));
     }
 
     // Menyimpan pesanan baru
@@ -110,13 +103,11 @@ class KasirHomeController extends Controller
     // Simpan Order
     $order = Order::create([
         'id_user' => $request->id_user,
-        'id_reservasi' => $request->id_reservasi ?: null,
-        'id_member' => $request->id_member ?: null,
+        'id_metode_pembayaran' => $request->id_metode_pembayaran,
         'tgl' => $request->tgl,
         'total_harga' => $subtotal,
         'jml_bayar' => $request->jumlah_bayar,
         'kembalian' => $request->kembalian,
-        'dp_reservasi' => $request->dp_reservasi ?? 0,
     ]);
 
     // Simpan Detail dan Kurangi Stok
@@ -139,8 +130,6 @@ class KasirHomeController extends Controller
     {
         $order = Order::with([
             'user',
-            'reservasi.member',
-            'reservasi',
             'detailOrders.menu'
         ])->findOrFail($id);
 

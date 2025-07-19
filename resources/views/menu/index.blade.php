@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('title', 'Menu')
-@section('judul', 'Menu Page')
+@section('judul', 'Menu')
+@section('page-title', 'Menu')
+@section('page-desc', 'Kelola dan lihat daftar menu yang tersedia')
 
 @section('content')
     <style>

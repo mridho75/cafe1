@@ -25,7 +25,7 @@ class LaporanController extends Controller
         $from = $request->input('from');
         $to = $request->input('to');
 
-        $query = Order::with(['detailOrders.menu', 'user', 'reservasi', 'member'])
+        $query = Order::with(['detailOrders.menu', 'user'])
               ->orderBy('tgl', 'desc');
 
         if ($from && $to) {
@@ -57,7 +57,7 @@ class LaporanController extends Controller
         $from = $request->input('from');
         $to = $request->input('to');
 
-        $query = Order::with(['user', 'reservasi', 'member', 'detailOrders.menu'])
+        $query = Order::with(['user', 'detailOrders.menu'])
             ->when($from && $to, function ($q) use ($from, $to) {
                 $q->whereBetween('tgl', [$from, $to]);
             });

@@ -21,7 +21,7 @@ class OrderController extends Controller
         }
 
         if ($request->ajax()) {
-            $orders = Order::with(['reservasi', 'member', 'metodePembayaran', 'user'])
+            $orders = Order::with(['metodePembayaran', 'user'])
                 ->orderBy('tgl', 'desc')
                 ->paginate(10);
 
@@ -29,7 +29,7 @@ class OrderController extends Controller
         }
 
         // Halaman utama (tanpa AJAX)
-        $orders = Order::with(['reservasi', 'member', 'metodePembayaran', 'user'])
+        $orders = Order::with(['metodePembayaran', 'user'])
             ->orderBy('tgl', 'desc')
             ->paginate(10);
 
@@ -39,7 +39,7 @@ class OrderController extends Controller
 
     public function show($id)
     {
-        $order = Order::with(['reservasi', 'detailOrders.menu', 'user', 'member'])->findOrFail($id);
+        $order = Order::with(['detailOrders.menu', 'user'])->findOrFail($id);
         return view('order.show', compact('order'));
     }
 
@@ -121,8 +121,6 @@ class OrderController extends Controller
     {
         $order = Order::with([
             'user',
-            'reservasi.member',
-            'reservasi',
             'detailOrders.menu'
         ])->findOrFail($id);
 

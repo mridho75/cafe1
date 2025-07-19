@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Payment Methods')
-@section('judul', 'Payment Methods Page')
+
+@section('title', 'Metode Pembayaran')
+@section('judul', 'Metode Pembayaran')
+@section('page-title', 'Metode Pembayaran')
+@section('page-desc', 'Kelola dan lihat daftar metode pembayaran yang tersedia')
 
 @section('content')
     <div class="container mt-5">

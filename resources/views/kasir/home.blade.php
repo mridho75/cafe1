@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Home - Kasir')
-@section('judul', 'Home Kasir Page')
+@section('title', 'Kasir')
+@section('judul', 'Kasir')
+@section('page-title', 'Kasir')
+@section('page-desc', 'Ringkasan aktivitas kasir dan riwayat order')
 
 @section('content')
 

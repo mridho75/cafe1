@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Daftar - Transaksi')
-@section('judul', 'Daftar Transaksi Page')
+@section('title', 'Transaksi')
+@section('judul', 'Transaksi')
+@section('page-title', 'Transaksi')
+@section('page-desc', 'Lihat dan kelola riwayat transaksi')
 
 @section('content')
     <div class="container mt-5">

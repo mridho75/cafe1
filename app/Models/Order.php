@@ -12,8 +12,6 @@ class Order extends Model
     protected $table = 'tb_orders'; // Nama tabel
     protected $fillable = [
         'id_user',
-        'id_reservasi',
-        'id_member',
         'id_metode_pembayaran',
         'tgl',
         'total_harga',
@@ -29,11 +27,7 @@ class Order extends Model
         return $this->belongsTo(UserCafe::class, 'id_user');
     }
 
-    // Relasi dengan Reservasi
-    public function reservasi()
-    {
-        return $this->belongsTo(Reservasi::class, 'id_reservasi');
-    }
+
 
     // Relasi dengan DetailOrder
     public function detailOrders()
@@ -41,10 +35,7 @@ class Order extends Model
         return $this->hasMany(DetailOrder::class, 'id_order');
     }
 
-    public function member()
-    {
-        return $this->belongsTo(Member::class, 'id_member');
-    }
+
 
     public function metodePembayaran()
     {
